@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AuthenticationController;
 use App\Http\Controllers\Api\TaskController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +22,14 @@ Route::post('tasks', [TaskController::class, 'create']);
 Route::put('tasks/{task}', [TaskController::class, 'update']);
 Route::delete('tasks/{task}', [TaskController::class, 'destroy']);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+
+Route::post('/users/create-account', [AuthenticationController::class, 'createAccount']);
+Route::post('/users/login', [AuthenticationController::class, 'login']);
+
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/users/profile', function(Request $request) {
+        return auth()->user();
+    });
+
+    Route::post('/users/logout', [AuthenticationController::class, 'logout']);
 });

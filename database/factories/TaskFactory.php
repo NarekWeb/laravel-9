@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use JetBrains\PhpStorm\ArrayShape;
 
@@ -15,9 +16,10 @@ class TaskFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    #[ArrayShape(['title' => "string", 'body' => "string"])] public function definition(): array
+    #[ArrayShape(['title' => "string", 'body' => "string", 'user_id' => "integer"])] public function definition(): array
     {
         return [
+            'user_id' => User::all()->random()->id,
             'title' => $this->faker->title,
             'body' => $this->faker->text
         ];

@@ -38,7 +38,7 @@ class TaskController extends Controller
     public function create(CreatTaskRequest $request): TaskResource
     {
         $task = $this->taskService->create($request->all());
-        dd($task);
+
         return new TaskResource($task);
     }
 
